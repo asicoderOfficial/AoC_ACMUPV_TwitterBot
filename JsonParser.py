@@ -14,18 +14,17 @@ def get_json():
         print("Error retrieving leaderboard")
         exit(1)
 
-    members = get_members(r.json()["members"])
-    message = create_message(members)
+    create_message(get_members(r.json()["members"]))
 
 
-def create_message(members):
-    message = "Hello!\nThis is the actual leaderboard:\n"
+def create_leaderboardlist(members):
+    leaderboardlist = []
+    i = 0
     for username, score, stars in members:
-        message += "*{}* {} Points, {} Stars\n".format(username, score, stars)
+        leaderboardlist.append([username, score, stars])
+        ++i
 
-    message += "\n<{}|View Online Leaderboard>".format(LEADERBOARD_URL)
-
-    return message
+    return leaderboardlist
 
 
 def get_members(members_of_json):
